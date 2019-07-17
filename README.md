@@ -1,5 +1,4 @@
 # Network Monitor
- Using technologies as Docker, Bro/Zeek, Kafka, HBase, all connected
 
 
 First, you must download (docker push) the necessary images:
