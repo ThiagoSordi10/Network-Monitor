@@ -26,7 +26,6 @@ obs: the wurstmeister's container, after docker-compose, will automatically begi
 
 ```sudo docker run harisekhon/hbase```
 
-<br>
 Configure the Zeek container:
 
 ```sudo docker exec -ti zeek bash```
@@ -35,14 +34,16 @@ Configure the Zeek container:
 
 and insert this lines in the beggining of the file:
 
-```@load /usr/local/zeek/lib/zeek/plugins/APACHE_KAFKA/scripts/Apache/Kafka/logs-to-kafka.bro
+```
+@load /usr/local/zeek/lib/zeek/plugins/APACHE_KAFKA/scripts/Apache/Kafka/logs-to-kafka.bro
     redef Kafka::kafka_conf = table(
         ["metadata.broker.list"] = "localhost:9092",
         ["client.id"] = "bro"
     );
     redef Kafka::topic_name = "bro";
     redef Kafka::logs_to_send = set(Conn::LOG, DNS::LOG, SSH::LOG, Notice::LOG);
-    redef Kafka::tag_json = T;```
+    redef Kafka::tag_json = T;
+```
 
 Save and close. After type
 
