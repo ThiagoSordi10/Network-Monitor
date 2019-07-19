@@ -19,6 +19,7 @@ https://cloud.docker.com/u/thiagosordi/repository/docker/thiagosordi/bro
 
 <h3>2. Running containers </h3>
 After
+
 ```sudo docker-compose up -d``` (in the folder with docker-compose.yml)
 
 With all images installed, now it's just run. Running the container images;
