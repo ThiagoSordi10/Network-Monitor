@@ -15,7 +15,7 @@ ZooKeepeer:
 https://hub.docker.com/r/wurstmeister/zookeeper/
 
 Zeek with connection plugin to Kafka:
-https://cloud.docker.com/u/thiagosordi/repository/docker/thiagosordi/bro
+https://cloud.docker.com/u/thiagosordi/repository/docker/thiagosordi/zeek
 
 After, ```sudo docker-compose up -d``` (in the folder with docker-compose.yml)
 

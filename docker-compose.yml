@@ -1,3 +1,4 @@
+
 version: '2'
 
 services:
@@ -19,6 +20,7 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
 
   zeek:
-    image: thiagosordi/bro
+    image: thiagosordi/zeek
     network_mode: host
     container_name: zeek
+    command: tail -F anything
