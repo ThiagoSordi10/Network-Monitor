@@ -15,7 +15,7 @@ ZooKeepeer:
 https://hub.docker.com/r/wurstmeister/zookeeper/
 
 Zeek with connection plugin to Kafka:
-https://cloud.docker.com/repository/docker/thiagosordi/zeek
+https://hub.docker.com/r/thiagosordi/zeek
 
 <h3>2. Running containers </h3>
 After
