@@ -17,6 +17,12 @@ https://hub.docker.com/r/wurstmeister/zookeeper/
 Zeek with connection plugin to Kafka:
 https://hub.docker.com/r/thiagosordi/zeek
 
+Python package to use HBase (using ```pip install```):
+- happybase (1.1.0)
+
+Python package to use Kafka (using ```pip install```):
+- kafka-python (1.4.6)
+
 <h3>2. Running containers </h3>
 After
 
