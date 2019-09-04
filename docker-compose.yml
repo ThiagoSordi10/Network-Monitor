@@ -1,5 +1,5 @@
 
-version: '2'
+version: '3'
 
 services:
 
@@ -24,3 +24,13 @@ services:
     network_mode: host
     container_name: zeek
     command: tail -F anything
+
+  hbase:
+    image: harisekhon/hbase
+    container_name: hbase
+
+  spark-streaming:
+    image: thiagosordi/spark-streaming
+    network_mode: host
+    container_name: spark-streaming
+    
