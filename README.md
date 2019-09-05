@@ -17,17 +17,18 @@ https://hub.docker.com/r/wurstmeister/zookeeper/
 Zeek with connection plugin to Kafka:
 https://hub.docker.com/r/thiagosordi/zeek
 
+Spark Streaming (Kafka Consumer):
+https://hub.docker.com/r/thiagosordi/spark-streaming
+
+They are auto installed in Spark Streaming image, but:
+
 Python package to use HBase (using ```pip install```):
 - happybase (1.1.0)
 
-Python package to use Kafka (using ```pip install```):
-- kafka-python (1.4.6)
-
-Spark Streaming (Kafka Consumer):
-<link here>
+Python package to use Spark (using ```pip install```):
+- Pyspark (2.4.4)
 
 <h3>2. Running containers </h3>
-After
 
 ```sudo docker-compose up -d``` (in the folder with docker-compose.yml)
 
