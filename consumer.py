@@ -1,9 +1,10 @@
 from kafka import KafkaConsumer
 from json import loads
-import sys
-from ipaddress import IPv4Network
-from typing import List
+#import sys
+#from ipaddress import IPv4Network
+#from typing import List
 from hbase_helper import Connect
+import time
 
 
 consumer = KafkaConsumer(
@@ -19,15 +20,21 @@ connect = Connect() #Instancia um objeto de conexão
 for message in consumer:
 	message = message.value
 	print(message)
-	'''if 'dns' in message:
-		message = loads(message['dns'])
+	if 'conn' in message:
+		message['conn'].update(identification = time.time())
+		connect.put_data_conn(message['conn'])
+	elif 'dns' in message:
+		message['dns'].update(identification = time.time())
+		connect.put_data_dns(message['dns'])
 	elif 'dhcp' in message:
-		message = loads(message['dhcp'])
+		message['dhcp'].update(identification = time.time())
+		connect.put_data_dhcp(message['dhcp'])
 	elif 'ssh' in message:
-		message = loads(message['ssh'])
+		message['ssh'].update(identification = time.time())
+		connect.put_data_ssh(message['ssh'])
 	elif 'http' in message:
-		message = loads(message['http'])
-	print(message)'''
-	connect.put_data(message) #Para cada mensagem no consumidor, salvar no hbase
+		message['http'].update(identification = time.time())
+		connect.put_data_http(message['http'])
+	#connect.put_data(message) #Para cada mensagem no consumidor, salvar no hbase
 
 connect.close()
