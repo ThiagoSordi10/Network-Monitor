@@ -41,10 +41,9 @@ Running single container:
 Ex:
 ```sudo docker run harisekhon/hbase```
 
-<h3>3. Configuring </h3>
-Configure the Zeek container:
+<h3>3. (Probably) Configuring Error Zeek Container </h3>
 
-obs: if running Zeek container gives an error, verify if the network interface is the same (eth0) that is configured, else https://stackoverflow.com/questions/39398773/error-while-starting-bro
+If running Zeek container gives an error, verify if the network interface is the same that is configured in ```node.cfg```, else https://stackoverflow.com/questions/39398773/error-while-starting-bro
 
 <h3>4. (Optional) Manual Consumer</h3>
 Running hbase_helper.py and consumer.py in your machine to get some results:
