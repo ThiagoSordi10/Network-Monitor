@@ -23,7 +23,7 @@ services:
     image: thiagosordi/zeek
     network_mode: host
     container_name: zeek
-    command: tail -F anything
+    command: zeekctl deploy
 
   hbase:
     image: harisekhon/hbase
