@@ -24,13 +24,17 @@ services:
     network_mode: host
     container_name: zeek
     command: tail -F anything
+    volumes:
+      - /home/jvlima/bigdata:/dados
+      - ./node.cfg:/usr/local/zeek/etc/node.cfg
+      - ./Zeek-docker/local.zeek:/usr/local/zeek/share/zeek/site/local.zeek
 
-  hbase:
-    image: harisekhon/hbase
-    container_name: hbase
+    #  hbase:
+    #    image: harisekhon/hbase
+    #    container_name: hbase
 
-  spark-streaming:
-    image: thiagosordi/spark-streaming
-    network_mode: host
-    container_name: spark-streaming
+    #  spark-streaming:
+    #    image: thiagosordi/spark-streaming
+    #    network_mode: host
+    #    container_name: spark-streaming
     
