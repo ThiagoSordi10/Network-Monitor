@@ -44,17 +44,7 @@ Ex:
 <h3>3. Configuring </h3>
 Configure the Zeek container:
 
-```sudo docker exec -ti zeek bash```
-
-Type
-
-```zeekctl```
-
-and 
-
-```deploy```
-
-obs: if deploy gives an error, verify if the network interface is the same (eth0) that is configured, else https://stackoverflow.com/questions/39398773/error-while-starting-bro
+obs: if running Zeek container gives an error, verify if the network interface is the same (eth0) that is configured, else https://stackoverflow.com/questions/39398773/error-while-starting-bro
 
 <h3>4. (Optional) Manual Consumer</h3>
 Running hbase_helper.py and consumer.py in your machine to get some results:
