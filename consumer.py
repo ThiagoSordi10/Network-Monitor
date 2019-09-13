@@ -15,6 +15,7 @@ consumer = KafkaConsumer(
      value_deserializer=lambda x: loads(x.decode('utf-8')))
 
 #Configurar a conexão com os nós, o keyspace e a versão protocolo
+create_keyspace()
 connection.setup(['172.17.0.1', '172.17.0.2'], "packets", protocol_version=3)
 sync_table(Connection)
 sync_table(SSH)
