@@ -4,7 +4,7 @@
 Images used in project:
 
 Cassandra:
-https://hub.docker.com/r/bitnami/cassandra/
+https://hub.docker.com/_/cassandra
 
 Kafka:
 https://hub.docker.com/r/wurstmeister/kafka/
@@ -20,9 +20,6 @@ https://hub.docker.com/r/thiagosordi/spark-streaming
 
 They are auto installed in Spark Streaming image, but:
 
-Python package to use HBase (using ```pip install```):
-- happybase (1.1.0)
-
 Python package to use Spark (using ```pip install```):
 - pyspark (2.4.4)
 
@@ -30,7 +27,7 @@ Python package to use Kafka (using ```pip install```):
 - kafka-python (1.4.6)
 
 Python package to use Cassandra-driver (using ```pip install```):
-- cassandra-driver (not updated  in image yet)
+- cassandra-driver (3.19.0)(not updated  in image yet)
 
 <h3>2. Running containers </h3>
 
