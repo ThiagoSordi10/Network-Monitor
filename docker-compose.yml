@@ -23,11 +23,31 @@ services:
     image: thiagosordi/zeek
     network_mode: host
     container_name: zeek
-    command: tail -F anything
+    command: zeekctl deploy
+    volumes:
+      - ./node.cfg:/usr/local/zeek/etc/node.cfg
+      - ./local.zeek:/usr/local/zeek/share/zeek/site/local.zeek
 
-  hbase:
-    image: harisekhon/hbase
-    container_name: hbase
+  cassandra-node1:
+    image: bitnami/cassandra:latest
+    container_name: node1
+    environment:
+      - CASSANDRA_CLUSTER_NAME=cassandra-cluster
+      - CASSANDRA_SEEDS=cassandra-node1,cassandra-node2, cassandra-node3
+
+  cassandra-node2:
+    image: bitnami/cassandra:latest
+    container_name: node2
+    environment:
+      - CASSANDRA_CLUSTER_NAME=cassandra-cluster
+      - CASSANDRA_SEEDS=cassandra-node1,cassandra-node2, cassandra-node3
+
+  cassandra-node3:
+    image: bitnami/cassandra:latest
+    container_name: node3
+    environment:
+      - CASSANDRA_CLUSTER_NAME=cassandra-cluster
+      - CASSANDRA_SEEDS=cassandra-node1,cassandra-node2, cassandra-node3
 
   spark-streaming:
     image: thiagosordi/spark-streaming
