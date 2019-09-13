@@ -27,7 +27,8 @@ def create_keyspace():
 	cluster = Cluster(['172.22.0.2', '172.22.0.3', '172.22.0.4']) #This will attempt to connection to a Cassandra instance on your local machine (127.0.0.1). You can also specify a list of IP addresses for nodes in your cluster
         session = cluster.connect()
         session.execute("CREATE KEYSPACE IF NOT EXISTS packets WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 3 }");	
- 
+	cluster.shutdown() 
+
 def insert_connection(data):
 	Connection.create(service=str(data.get('service')), duration=str(data.get('duration')), orig_bytes=str(data.get('orig_bytes')), resp_bytes=str(data.get('resp_bytes')), conn_state=str(data.get('conn_state')), local_orig=str(data.get('local_orig')), local_resp=str(data.get('local_resp')), missed_bytes=str(data.get('missed_bytes')), history=str(data.get('history')), orig_pkts=str(data.get('orig_pkts')), orig_ip_bytes=str(data.get('orig_ip_bytes')), resp_pkts=str(data.get('resp_pkts')), resp_ip_bytes=str(data.get('resp_ip_bytes')), tunnel_parents=str(data.get('tunnel_parents')), vlan=str(data.get('vlan')), inner_vlan=str(data.get('inner_vlan')), orig_l2_addr=str(data.get('orig_l2_addr')), resp_l2_addr=str(data.get('resp_l2_addr')))
 
