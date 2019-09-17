@@ -94,7 +94,7 @@ def insert_dhcp(data):
 		mac=str(data.get('mac')),
 		host_name = str(data.get('host_name')),
 		msg_types = list(['',] if data.get('msg_types') is None else data.get('msg_types')),
-		duration  = float(data.get('duration')) 
+		duration  = float(data.get('duration')), 
 		assigned_ip=str(data.get('assigned_ip')), 
 		lease_time=str(data.get('lease_time')), 
 		trans_id1=str(data.get('trans_id1'))
