@@ -13,9 +13,10 @@ consumer = KafkaConsumer(
      group_id='my-group',
      value_deserializer=lambda x: loads(x.decode('utf-8')))
 
-client = docker.from_env()
-
-clusterIPs = ['172.22.0.4']
+client = docker.APIClient(base_url='unix://var/run/docker.sock')
+container = client.containers(filters={'name': "cassandra_node_1"}) #colocar pela imagem pra pegar os containers
+clusterIPs = []
+clusterIPs.append(client.inspect_container(container[0])['NetworkSettings']['Networks']['testedosistema_default']['IPAddress'])
 
 ConnectDB( clusterIPs )
 print("Starting ...")
