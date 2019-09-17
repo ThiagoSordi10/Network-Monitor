@@ -1,9 +1,8 @@
 from kafka import KafkaConsumer
 from json import loads
 from cassandra_helper import *
-from cassandra.cqlengine import connection
-from cassandra.cqlengine.management import sync_table
 import time
+import docker
 
 
 consumer = KafkaConsumer(
@@ -14,15 +13,12 @@ consumer = KafkaConsumer(
      group_id='my-group',
      value_deserializer=lambda x: loads(x.decode('utf-8')))
 
-#Configurar a conexão com os nós, o keyspace e a versão protocolo
-create_keyspace()
-connection.setup(['172.17.0.1', '172.17.0.2'], "packets", protocol_version=3)
-sync_table(Connection)
-sync_table(SSH)
-sync_table(DHCP)
-sync_table(HTTP)
-sync_table(DNS)
-print("Iniciar")
+client = docker.from_env()
+
+clusterIPs = ['172.22.0.4']
+
+ConnectDB( clusterIPs )
+print("Starting ...")
 
 for message in consumer:
         message = message.value
@@ -42,3 +38,4 @@ for message in consumer:
         elif 'http' in message:
                 message['http'].update(identification = time.time())
                 insert_http(message['http'])
+
