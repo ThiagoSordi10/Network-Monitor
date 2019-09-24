@@ -18,12 +18,12 @@ https://hub.docker.com/r/thiagosordi/zeek
 Spark Streaming (Kafka Consumer):
 https://hub.docker.com/r/thiagosordi/spark-streaming
 
-They are auto installed in Spark Streaming image, but:
+Some of they are auto installed in Spark Streaming image, but:
 
 Python package to use Spark (using ```pip3 install```):
 - pyspark (2.4.4)
 
-Python package to use Kafka (using ```pip3 install```):
+Python package to use Kafka (using ```pip3 install```) (this is just for manual test):
 - kafka-python (1.4.6)
 
 Python package to use Cassandra-driver (using ```pip3 install```):
