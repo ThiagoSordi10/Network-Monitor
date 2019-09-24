@@ -20,20 +20,23 @@ https://hub.docker.com/r/thiagosordi/spark-streaming
 
 They are auto installed in Spark Streaming image, but:
 
-Python package to use Spark (using ```pip install```):
+Python package to use Spark (using ```pip3 install```):
 - pyspark (2.4.4)
 
-Python package to use Kafka (using ```pip install```):
+Python package to use Kafka (using ```pip3 install```):
 - kafka-python (1.4.6)
 
-Python package to use Cassandra-driver (using ```pip install```):
-- cassandra-driver (3.19.0)(not updated  in image yet)
+Python package to use Cassandra-driver (using ```pip3 install```):
+- cassandra-driver (3.19.0)
+
+Python package to use Docker Python Lib (using ```pip3 install```):
+- Docker (4.0.2)
 
 <h3>2. Running containers </h3>
 
 ```sudo docker-compose up -d``` (in the folder with docker-compose.yml)
 
-With all images installed, now it's just run. 
+All containers are running now.
 
 Running single container:
 Ex:
@@ -45,19 +48,17 @@ If running Zeek container gives an error, verify if the network interface is the
 
 <h3>4. (Optional) Manual Consumer</h3>
 Running cassandra_helper.py and consumer.py in your machine to get some results:
+Obs: Verify if your computer has the Python libs mentioned in topic 1.
 
 ```sudo python3 consumer.py```
 
-Obs: The Zeek and Hbase container are running as containers too.
+Obs: The Zeek, Kafka and Cassandra will be running as containers.
 
 <h3>5. Run Spark Streaming </h3>
 With all container running, now run the Spark Streaming container:
 
-```sudo docker exec -ti spark-streaming bash```
-
-After:
-
-```/usr/local/spark/bin/spark-submit  --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.4.0 spark.py```
+```sudo docker exec -ti spark-streaming /usr/local/spark/bin/spark-submit --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.4.0 /spark/spark.py
+```
 
 <h3>6. Using later </h3>
 When you want to run everything again, just:
