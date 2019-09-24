@@ -3,7 +3,15 @@ from json import loads
 from cassandra_helper import *
 import time
 import docker
+import sys
 
+# get docker containers from cassandra
+client = docker.from_env()
+clusterIPs = []
+for container in client.containers.list(filters={'name': "cassandra"}):
+        cnet = next(iter(vars(container)["attrs"]["NetworkSettings"]["Networks"].values()))
+        print('Found cassandra node ' + container.name)
+        clusterIPs.append(cnet['IPAddress'])
 
 consumer = KafkaConsumer(
     'zeek',
@@ -13,10 +21,6 @@ consumer = KafkaConsumer(
      group_id='my-group',
      value_deserializer=lambda x: loads(x.decode('utf-8')))
 
-client = docker.APIClient(base_url='unix://var/run/docker.sock')
-container = client.containers(filters={'name': "cassandra_node_1"}) #colocar pela imagem pra pegar os containers
-clusterIPs = []
-clusterIPs.append(client.inspect_container(container[0])['NetworkSettings']['Networks']['testedosistema_default']['IPAddress'])
 
 ConnectDB( clusterIPs )
 print("Starting ...")
@@ -39,4 +43,3 @@ for message in consumer:
         elif 'http' in message:
                 message['http'].update(identification = time.time())
                 insert_http(message['http'])
-
