@@ -48,6 +48,7 @@ If running Zeek container gives an error, verify if the network interface is the
 
 <h3>4. (Optional) Manual Consumer</h3>
 Running cassandra_helper.py and consumer.py in your machine to get some results:
+
 Obs: Verify if your computer has the Python libs mentioned in topic 1.
 
 ```sudo python3 consumer.py```
