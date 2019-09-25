@@ -58,8 +58,7 @@ Obs: The Zeek, Kafka and Cassandra will be running as containers.
 <h3>5. Run Spark Streaming </h3>
 With all container running, now run the Spark Streaming container:
 
-```sudo docker exec -ti spark-streaming /usr/local/spark/bin/spark-submit --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.4.0 /spark/spark.py
-```
+```sudo docker exec -ti spark-streaming /usr/local/spark/bin/spark-submit --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.4.0 /spark/spark.py```
 
 <h3>6. Using later </h3>
 When you want to run everything again, just:
