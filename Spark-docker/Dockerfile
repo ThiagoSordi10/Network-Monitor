@@ -6,8 +6,8 @@ ENV HADOOP_VERSION 2.7
 ENV SCALA_VERSION 2.11
 ENV SPARK_HOME /usr/local/spark
 
-COPY requirements.txt /
-COPY spark.py /home
+WORKDIR /spark
+COPY requirements.txt /spark
 
 RUN apk update && apk upgrade
 RUN apk add --no-cache bash openjdk8-jre python3-dev py-pip gcc musl-dev \
@@ -23,10 +23,10 @@ RUN cd /usr/local && ln -s spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} sp
 #    wget http://repo1.maven.org/maven2/org/apache/spark/spark-streaming-kafka-0-10-assembly_${SCALA_VERSION}/${SPARK_VERSION}/spark-streaming-kafka-0-10-#assembly_${SCALA_VERSION}-${SPARK_VERSION}.jar && \
 #    mv spark-streaming-kafka-0-10-assembly_${SCALA_VERSION}-${SPARK_VERSION}.jar /usr/local/spark/jars
 
-WORKDIR /home
-
 EXPOSE 8080
 EXPOSE 6066
 EXPOSE 7077
+
+WORKDIR /spark
 
 #/usr/local/spark/bin/spark-submit  --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.4.0 spark.py
