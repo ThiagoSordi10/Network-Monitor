@@ -64,7 +64,7 @@ services:
     volumes:
       - ./spark.py:/spark/spark.py
       - ./cassandra_helper.py:/spark/cassandra_helper.py
-      - ./cassandra.py:/spark/cassandra.py
+#      - ./cassandra.py:/spark/cassandra.py
 
 volumes:
   n01-volume:
