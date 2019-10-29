@@ -17,8 +17,8 @@ def create_keyspace( clusterIPs ):
         cluster = Cluster( clusterIPs )
         #This will attempt to connection to a Cassandra instance on your local machine (127.0.0.1). You can also specify a list of IP addresses for nodes in your cluster
         session = cluster.connect()
-        session.execute("CREATE KEYSPACE IF NOT EXISTS network WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 }");	
-        cluster.shutdown() 
+        session.execute("CREATE KEYSPACE IF NOT EXISTS network WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 }");   
+        #cluster.shutdown() 
 
 def create_tables():
         # https://docs.datastax.com/en/developer/python-driver/3.19/api/cassandra/cqlengine/management/
@@ -29,132 +29,147 @@ def create_tables():
         sync_table(DNS)
 
 def insert_connection(data):
- 	Connection.create(
-                 ts = datetime.fromtimestamp(data.get('ts')),
-                 uid = str(data.get('uid')),
-                 orig_h = str(data.get('id.orig_h')),
-                 orig_p = int(data.get('id.orig_p')),
-                 resp_h = str(data.get('id.resp_h')),
-                 resp_p = int(data.get('id.resp_p')),
-                 proto = str(data.get('proto')),
-                 duration = float(0 if data.get('duration') is None else data.get('duration')),                 
-                 orig_bytes = int(0 if data.get('orig_bytes') is None else data.get('orig_bytes')),
-                 resp_bytes = int(0 if data.get('resp_bytes') is None else data.get('resp_bytes')), 
-                 conn_state = str(data.get('conn_state')),
-                 #local_orig =   False             
-                 # local_resp False
-                 missed_bytes = int(data.get('missed_bytes')),
-                 history = str(data.get('history')),
-                 orig_pkts = int(data.get('orig_pkts')),
-                 orig_ip_bytes = int(data.get('orig_ip_bytes')),
-                 resp_pkts = int(data.get('resp_pkts')),
-                 resp_ip_bytes = int(data.get('resp_ip_bytes')),
-                 orig_l2_addr = str(data.get('orig_l2_addr')),
-                 resp_l2_addr = str(data.get('resp_l2_addr'))
-         )   
+        try:
+                Connection.create(
+                         ts = datetime.fromtimestamp(data.get('ts')),
+                         uid = str(data.get('uid')),
+                         orig_h = str(data.get('id.orig_h')),
+                         orig_p = int(data.get('id.orig_p')),
+                         resp_h = str(data.get('id.resp_h')),
+                         resp_p = int(data.get('id.resp_p')),
+                         proto = str(data.get('proto')),
+                         duration = float(0 if data.get('duration') is None else data.get('duration')),                 
+                         orig_bytes = int(0 if data.get('orig_bytes') is None else data.get('orig_bytes')),
+                         resp_bytes = int(0 if data.get('resp_bytes') is None else data.get('resp_bytes')), 
+                         conn_state = str(data.get('conn_state')),
+                         #local_orig =   False             
+                         # local_resp False
+                         missed_bytes = int(data.get('missed_bytes')),
+                         history = str(data.get('history')),
+                         orig_pkts = int(data.get('orig_pkts')),
+                         orig_ip_bytes = int(data.get('orig_ip_bytes')),
+                         resp_pkts = int(data.get('resp_pkts')),
+                         resp_ip_bytes = int(data.get('resp_ip_bytes')),
+                         orig_l2_addr = str(data.get('orig_l2_addr')),
+                         resp_l2_addr = str(data.get('resp_l2_addr'))
+                 )
+        except:
+                print("Connection not inserted")
 
 
 def insert_ssh(data):
-        SSH.create( 
-                ts = datetime.fromtimestamp(data.get('ts')), 
-                uid = str(data.get('uid')), 
-                orig_h = str(data.get('id.orig_h')),
-                orig_p = int(data.get('id.orig_p')), 
-                resp_h = str(data.get('id.resp_h')), 
-                resp_p = int(data.get('id.resp_p')), 
-                proto = str(data.get('proto')),
-                auth_attempts = int(data.get('auth_attempts')),
-                direction = str(data.get('direction')),
-                server = str(data.get('server')),
-                cipher_alg = str(data.get('cipher_alg')),
-                mac_alg = str(data.get('mac_alg')),
-                compression_alg=str(data.get('compression_alg')),
-                kex_alg=str(data.get('kex_alg')),
-                host_key_alg=str(data.get('host_key_alg')),
-                host_key=str(data.get('host_key'))                 
-        )
+        try:
+                SSH.create( 
+                        ts = datetime.fromtimestamp(data.get('ts')), 
+                        uid = str(data.get('uid')), 
+                        orig_h = str(data.get('id.orig_h')),
+                        orig_p = int(data.get('id.orig_p')), 
+                        resp_h = str(data.get('id.resp_h')), 
+                        resp_p = int(data.get('id.resp_p')), 
+                        proto = str(data.get('proto')),
+                        auth_attempts = int(data.get('auth_attempts')),
+                        direction = str(data.get('direction')),
+                        server = str(data.get('server')),
+                        cipher_alg = str(data.get('cipher_alg')),
+                        mac_alg = str(data.get('mac_alg')),
+                        compression_alg=str(data.get('compression_alg')),
+                        kex_alg=str(data.get('kex_alg')),
+                        host_key_alg=str(data.get('host_key_alg')),
+                        host_key=str(data.get('host_key'))                 
+                )
+        except:
+                print("SSH not inserted")
 
 def insert_dhcp(data):
-        DHCP.create(
-                ts = datetime.fromtimestamp(data.get('ts')), 
-                uid = str(data.get('uid')), 
-                orig_h = str(data.get('id.orig_h')),
-                orig_p = int(data.get('id.orig_p')), 
-                resp_h = str(data.get('id.resp_h')), 
-                resp_p = int(data.get('id.resp_p')), 
-                proto = str(data.get('proto')),
-		mac=str(data.get('mac')),
-		host_name = str(data.get('host_name')),
-		msg_types = list(['',] if data.get('msg_types') is None else data.get('msg_types')),
-		duration  = float(data.get('duration')), 
-		assigned_ip=str(data.get('assigned_ip')), 
-		lease_time=str(data.get('lease_time')), 
-		trans_id1=str(data.get('trans_id1'))
-	)
+        try:
+                DHCP.create(
+                        ts = datetime.fromtimestamp(data.get('ts')), 
+                        uid = str(data.get('uid')), 
+                        orig_h = str(data.get('id.orig_h')),
+                        orig_p = int(data.get('id.orig_p')), 
+                        resp_h = str(data.get('id.resp_h')), 
+                        resp_p = int(data.get('id.resp_p')), 
+                        proto = str(data.get('proto')),
+                        mac=str(data.get('mac')),
+                        host_name = str(data.get('host_name')),
+                        msg_types = list(['',] if data.get('msg_types') is None else data.get('msg_types')),
+                        duration  = float(data.get('duration')), 
+                        assigned_ip=str(data.get('assigned_ip')), 
+                        lease_time=str(data.get('lease_time')), 
+                        trans_id1=str(data.get('trans_id1'))
+                )
+        except:
+                print("DHCP not inserted")
 
 def insert_http(data):
-        HTTP.create(
-                ts = datetime.fromtimestamp(data.get('ts')), 
-                uid = str(data.get('uid')), 
-                orig_h = str(data.get('id.orig_h')),
-                orig_p = int(data.get('id.orig_p')), 
-                resp_h = str(data.get('id.resp_h')), 
-                resp_p = int(data.get('id.resp_p')), 
-                proto = str(data.get('proto')),
-		trans_depth=str(data.get('trans_depth')), 
-		method=str(data.get('method')), 
-		host=str(data.get('host')), 
-		uri=str(data.get('uri')), 
-		referrer=str(data.get('referrer')), 
-		version=str(data.get('version')), 
-		user_agent=str(data.get('user_agent')), 
-		request_body_len=str(data.get('request_body_len')), 
-		response_body_len=str(data.get('response_body_len')), 
-		status_code=str(data.get('status_code')), 
-		status_msg=str(data.get('status_msg')), 
-		info_code=str(data.get('info_code')), 
-		info_msg=str(data.get('info_msg')), 
-		tags=str(data.get('tags')), 
-		username=str(data.get('username')), 
-		password=str(data.get('password')), 
-		proxied=str(data.get('proxied')), 
-		orig_fuids=str(data.get('orig_fuids')), 
-		orig_filenames=str(data.get('orig_filenames')), 
-		orig_mime_types=str(data.get('orig_mime_types')), 
-		resp_fuids=str(data.get('resp_fuids')), 
-		resp_filenames=str(data.get('resp_filenames')), 
-		resp_mime_types=str(data.get('resp_mime_types'))
-	)
+        try:
+                HTTP.create(
+                        ts = datetime.fromtimestamp(data.get('ts')), 
+                        uid = str(data.get('uid')), 
+                        orig_h = str(data.get('id.orig_h')),
+                        orig_p = int(data.get('id.orig_p')), 
+                        resp_h = str(data.get('id.resp_h')), 
+                        resp_p = int(data.get('id.resp_p')), 
+                        proto = str(data.get('proto')),
+                        trans_depth=str(data.get('trans_depth')), 
+                        method=str(data.get('method')), 
+                        host=str(data.get('host')), 
+                        uri=str(data.get('uri')), 
+                        referrer=str(data.get('referrer')), 
+                        version=str(data.get('version')), 
+                        user_agent=str(data.get('user_agent')), 
+                        request_body_len=str(data.get('request_body_len')), 
+                        response_body_len=str(data.get('response_body_len')), 
+                        status_code=str(data.get('status_code')), 
+                        status_msg=str(data.get('status_msg')), 
+                        info_code=str(data.get('info_code')), 
+                        info_msg=str(data.get('info_msg')), 
+                        tags=str(data.get('tags')), 
+                        username=str(data.get('username')), 
+                        password=str(data.get('password')), 
+                        proxied=str(data.get('proxied')), 
+                        orig_fuids=str(data.get('orig_fuids')), 
+                        orig_filenames=str(data.get('orig_filenames')), 
+                        orig_mime_types=str(data.get('orig_mime_types')), 
+                        resp_fuids=str(data.get('resp_fuids')), 
+                        resp_filenames=str(data.get('resp_filenames')), 
+                        resp_mime_types=str(data.get('resp_mime_types'))
+                )
+        except:
+                print("HTTP not inserted")
 
 def insert_dns(data):
-        DNS.create(
-                ts = datetime.fromtimestamp(data.get('ts')), 
-                uid = str(data.get('uid')), 
-                orig_h = str(data.get('id.orig_h')),
-                orig_p = int(data.get('id.orig_p')), 
-                resp_h = str(data.get('id.resp_h')), 
-                resp_p = int(data.get('id.resp_p')), 
-                proto = str(data.get('proto')),
-                trans_id=int(data.get('trans_id')), 
-                rtt=str(data.get('rtt')), 
-                query=str(data.get('query')), 
-                qclass=str(data.get('qclass')), 
-                qclass_name=str(data.get('qclass_name')), 
-                qtype=str(data.get('qtype')), 
-                qtype_name=str(data.get('qtype_name')), 
-                rcode=int(0 if data.get('rcode') is None else data.get('rcode')),
-                rcode_name=str(data.get('rcode_name')), 
-                aa=bool(data.get('aa')), 
-                tc=bool(data.get('tc')), 
-                rd=bool(data.get('rd')), 
-                ra=bool(data.get('ra')), 
-                z=int(0 if data.get('z') is None else data.get('z')), 
-                answers=list(['',] if data.get('answers') is None else data.get('answers')), 
-                ttls=list([0,] if data.get('TTLs') is None else data.get('TTLs')),
-                rejected=bool(data.get('rejected')), 
-                addl=str(data.get('addl')),
-                auth=str(data.get('auth'))
+        try:
+                DNS.create(
+                        ts = datetime.fromtimestamp(data.get('ts')), 
+                        uid = str(data.get('uid')), 
+                        orig_h = str(data.get('id.orig_h')),
+                        orig_p = int(data.get('id.orig_p')), 
+                        resp_h = str(data.get('id.resp_h')), 
+                        resp_p = int(data.get('id.resp_p')), 
+                        proto = str(data.get('proto')),
+                        trans_id=int(data.get('trans_id')), 
+                        rtt=str(data.get('rtt')), 
+                        query=str(data.get('query')), 
+                        qclass=str(data.get('qclass')), 
+                        qclass_name=str(data.get('qclass_name')), 
+                        qtype=str(data.get('qtype')), 
+                        qtype_name=str(data.get('qtype_name')), 
+                        rcode=int(0 if data.get('rcode') is None else data.get('rcode')),
+                        rcode_name=str(data.get('rcode_name')), 
+                        aa=bool(data.get('aa')), 
+                        tc=bool(data.get('tc')), 
+                        rd=bool(data.get('rd')), 
+                        ra=bool(data.get('ra')), 
+                        z=int(0 if data.get('z') is None else data.get('z')), 
+                        answers=list(['',] if data.get('answers') is None else data.get('answers')), 
+                        ttls=list([0,] if data.get('TTLs') is None else data.get('TTLs')),
+                        rejected=bool(data.get('rejected')), 
+                        addl=str(data.get('addl')),
+                        auth=str(data.get('auth'))
                 )
+        except:
+                print("DNS not inserted")
 
 
 # super class
