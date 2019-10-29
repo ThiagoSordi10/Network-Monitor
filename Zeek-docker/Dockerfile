@@ -44,23 +44,24 @@ RUN cd ${SRC_DIR}; \
     cd zeek;  \
     ./configure --prefix=${ZEEK_BASE_DIR}; \
     make; \
-    make install;
-    
-# Download, build and install librdkafka 
-RUN cd ${SRC_DIR}; \
+    make install; \
+    cd ..; \
     git clone https://github.com/edenhill/librdkafka.git; \
     cd librdkafka;  \
     ./configure --prefix=${INSTALL_DIR}; \
     make; \
-    make install;
-    
-# Download, build and install Bro-Kafka plugin 
-RUN cd ${SRC_DIR}; \
+    make install; \
+    cd ..; \
+    cd ${SRC_DIR}; \
     git clone https://github.com/apache/metron-bro-plugin-kafka.git; \
     cd metron-bro-plugin-kafka; \
     ./configure --install-root=${ZEEK_BASE_DIR}/lib/zeek/plugins --bro-dist=${SRC_DIR}/zeek --with-librdkafka=${INSTALL_DIR}/lib; \
     make; \
-    make install;
+    make install; \
+    cd ..; \
+    rm -R zeek; \
+    rm -R librdkafka; \
+    rm -R metron-bro-plugin-kafka;
     
 
 
