@@ -4,14 +4,20 @@ from pyspark.streaming.kafka import KafkaUtils
 from cassandra_helper import *
 import docker
 import json
+import time #teste de tempo
 
-clusterIPs = ["172.24.0.2"]
+clusterIPs = ["172.24.0.3"]
+soma = 0
 
 def sendPartition(iter):
     # ConnectionPool is a static, lazily initialized pool of connections
     #connection = ConnectionPool.getConnection()
     ConnectDB( clusterIPs )
+    global soma
+    
     print("Starting ...")
+    start = time.time()
+    print("Tempo\n")
     for record in iter:
         #connection.send(record)
         print(record)
@@ -31,6 +37,9 @@ def sendPartition(iter):
         elif 'http' in record:
                 #record['http'].update(identification = time.time())
                 insert_http(record['http'])
+    end = time.time()
+    soma += end - start
+    print(soma)
     # return to the pool for future reuse
     #ConnectionPool.returnConnection(connection)
 #dstream.foreachRDD(lambda rdd: rdd.foreachPartition(sendPartition))
@@ -55,7 +64,9 @@ ssc = StreamingContext(sc,30)
 kafkaStream = KafkaUtils.createStream(ssc, 'zookeeper:2181', 'my-group', {'zeek':1})
 
 lines = kafkaStream.map(lambda x: x[1])
-lines.pprint()
+#lines.pprint()
+
+
 lines.foreachRDD(lambda rdd: rdd.foreachPartition(sendPartition))
 
 ssc.start()
