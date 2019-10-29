@@ -42,9 +42,17 @@ Running single container:
 Ex:
 ```sudo docker run thiagosordi/zeek```
 
-<h3>3. (Probably) Configuring Error Zeek Container </h3>
+<h3>3. Execute Zeek </h3>
 
-If running Zeek container gives an error, verify if the network interface is the same that is configured in ```node.cfg```, else change the interface in this file.
+Now, you can monitor your network inteface:
+
+```sudo docker exec -ti zeek zeekctl deploy```
+
+or from a PCAP file:
+
+```sudo docker exec -ti zeek zeek -r /pcap_files/<name of your pcap> local.zeek```
+
+ obs: If execute zeekctl in Zeek container gets an error, verify if the network interface is the same that is configured in ```node.cfg```, else change the interface in this file.
 
 <h3>4. (Optional) Manual Consumer</h3>
 Running cassandra_helper.py and consumer.py in your machine to get some results:
